@@ -34,7 +34,7 @@ public class Ventana1 extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
 
-        entrarJB.setIcon(new javax.swing.ImageIcon("C:\\Users\\Laura\\Desktop\\clinica\\logo.png")); // NOI18N
+        entrarJB.setIcon(new javax.swing.ImageIcon(getClass().getResource("/clinica/logo.png"))); // NOI18N
         entrarJB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 entrarJBActionPerformed(evt);
