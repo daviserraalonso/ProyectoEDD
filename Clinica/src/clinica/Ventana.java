@@ -38,6 +38,7 @@ public class Ventana extends javax.swing.JFrame {
         accederJB = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        salirJB = new javax.swing.JButton();
 
         jRadioButton1.setText("jRadioButton1");
 
@@ -86,6 +87,16 @@ public class Ventana extends javax.swing.JFrame {
         jPanel1.add(jLabel4);
         jLabel4.setBounds(10, 10, 370, 50);
 
+        salirJB.setBackground(new java.awt.Color(153, 153, 255));
+        salirJB.setText("Salir");
+        salirJB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                salirJBActionPerformed(evt);
+            }
+        });
+        jPanel1.add(salirJB);
+        salirJB.setBounds(333, 0, 60, 23);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -109,6 +120,10 @@ public class Ventana extends javax.swing.JFrame {
         this.setEnabled(false);
         this.setVisible(false);
     }//GEN-LAST:event_accederJBActionPerformed
+
+    private void salirJBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirJBActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_salirJBActionPerformed
 
     /**
      * @param args the command line arguments
@@ -154,5 +169,6 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JTextField nusTF;
+    private javax.swing.JButton salirJB;
     // End of variables declaration//GEN-END:variables
 }
