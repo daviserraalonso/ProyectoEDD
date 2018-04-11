@@ -1,0 +1,6 @@
+
+package clinicaPrivada;
+
+interface printable {
+    
+}

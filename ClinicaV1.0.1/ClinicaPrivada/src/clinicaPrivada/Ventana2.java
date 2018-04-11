@@ -1,12 +1,26 @@
 
 package clinicaPrivada;
 
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.HeadlessException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.geom.Rectangle2D;
+import java.awt.print.PageFormat;
+import java.awt.print.Pageable;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-public class Ventana2 extends javax.swing.JFrame {
+public class Ventana2 extends javax.swing.JFrame{
 
     /*Variables JDialog*/
     JLabel jbMedicamento = new JLabel("Medicamento");
@@ -20,6 +34,10 @@ public class Ventana2 extends javax.swing.JFrame {
     JButton btGuardar = new JButton("Guardar");
     JButton btImprimir = new JButton("Imprimir");
     
+    Graphics graficos;
+    PageFormat formatoPagina;
+    int indicePagina;
+            
     public Ventana2() {
         initComponents();
         setVisible(true);
@@ -261,6 +279,7 @@ public class Ventana2 extends javax.swing.JFrame {
     }//GEN-LAST:event_volverJBActionPerformed
 
     private void btRecetasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRecetasActionPerformed
+
         JDialog jdMedicamentos = new JDialog();
         jdMedicamentos.setSize(400,500);
         jdMedicamentos.setVisible(true);
@@ -283,15 +302,94 @@ public class Ventana2 extends javax.swing.JFrame {
         jdMedicamentos.add(btGuardar);
         btGuardar.setBounds(50, 230, 90, 30);
         jdMedicamentos.add(btImprimir);
+        btImprimir.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                PrinterJob job = PrinterJob.getPrinterJob();
+                job.setPrintable(new JDialog(), );
+                PrinterJob trabajo = new PrinterJob() {
+                    @Override
+                    public void setPrintable(Printable painter) {}
+                    
+                    @Override
+                    public void setPrintable(Printable painter, PageFormat format) {}
+                    
+                    @Override
+                    public void setPageable(Pageable document) throws NullPointerException {}
+                    
+                    @Override
+                    public boolean printDialog() throws HeadlessException {
+                        return true;
+                    }
+                    
+                    @Override
+                    public PageFormat pageDialog(PageFormat page) throws HeadlessException {
+                        PageFormat pager = page;
+                        return page;
+                    }
+                    
+                    @Override
+                    public PageFormat defaultPage(PageFormat page) {
+                        PageFormat pager = page;
+                        return page;
+                    }
+                    
+                    @Override
+                    public PageFormat validatePage(PageFormat page) {
+                        PageFormat pager = page;
+                        return page;
+                    }
+                    
+                    @Override
+                    public void print() throws PrinterException {
+                        System.out.println("pepe");
+                    }
+                    
+                    @Override
+                    public void setCopies(int copies) {}
+                    
+                    @Override
+                    public int getCopies() {
+                        int copias = 0;
+                        return copias;
+                    }
+                    
+                    @Override
+                    public String getUserName() {
+                        String cadena = "";
+                        return cadena;
+                    }
+                    
+                    @Override
+                    public void setJobName(String jobName) { }
+                    
+                    @Override
+                    public String getJobName() {
+                        String cadena = "";
+                        return cadena;
+                    }
+                    
+                    @Override
+                    public void cancel() {}
+                    
+                    @Override
+                    public boolean isCancelled() {
+                        return false;
+                    }
+                };
+            }
+        });
         btImprimir.setBounds(150, 230, 90, 30);
         
     }//GEN-LAST:event_btRecetasActionPerformed
 
+    
     public static void main(String args[]) {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Ventana2().setVisible(true);
+                
             }
         });
     }
@@ -328,4 +426,6 @@ public class Ventana2 extends javax.swing.JFrame {
     private javax.swing.JTextField tlfTF;
     private javax.swing.JButton volverJB;
     // End of variables declaration//GEN-END:variables
+
+    
 }
