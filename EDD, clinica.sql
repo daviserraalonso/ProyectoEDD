@@ -1,12 +1,12 @@
-create database clinica
-use clinica
+create database clinicaprivada
+use clinicaprivada
 
 create table paciente(
-	NUS int check(NUS >= 000000000 and NUS <= 999999999) primary key,
+	NUS int primary key,
 	nombre varchar(20),
 	primer_apellido varchar(20),
 	segundo_apellido varchar(20),
-	tlf int check(tlf >=100000000 and tlf <= 999999999),
+	tlf int,
 	fecha_nacimiento date,
 	fecha_alta date,
 	medicamentos varchar(100)
@@ -34,10 +34,7 @@ create table receta(
 	idMe int references medicamento,
 	fecha_receta date
 )
-select * from paciente
-select * from consulta
-select * from medico
-select * from medicamento
+
 insert into paciente values
 ('123456789', 'Luisa', 'Garrido', 'Sánchez', '958412036','01/08/1985', '02/04/2014', 'Paracetamol, Amoxicilina'),
 ('521478963', 'Carlos', 'Diaz', 'Gutierrez', '654120369','15/01/1998', '25/12/2016', 'Butorfanol, Calcitonina'),
