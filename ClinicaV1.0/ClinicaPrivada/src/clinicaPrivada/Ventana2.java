@@ -5,6 +5,7 @@
  */
 package clinicaPrivada;
 
+import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -31,7 +32,7 @@ public class Ventana2 extends javax.swing.JFrame {
     public Ventana2() {
         initComponents();
         setVisible(true);
-        setSize(500,350);
+        setSize(410,350);
         setLocationRelativeTo(null);
         
     }
@@ -196,7 +197,7 @@ public class Ventana2 extends javax.swing.JFrame {
         jPanel1.add(jScrollPane1);
         jScrollPane1.setBounds(228, 160, 170, 119);
 
-        guardarJB.setBackground(new java.awt.Color(255, 255, 255));
+        guardarJB.setBackground(new java.awt.Color(153, 153, 255));
         guardarJB.setFont(new java.awt.Font("Calibri", 0, 11)); // NOI18N
         guardarJB.setText("GUARDAR");
         guardarJB.addActionListener(new java.awt.event.ActionListener() {
@@ -205,9 +206,9 @@ public class Ventana2 extends javax.swing.JFrame {
             }
         });
         jPanel1.add(guardarJB);
-        guardarJB.setBounds(20, 300, 110, 23);
+        guardarJB.setBounds(10, 300, 110, 23);
 
-        volverJB.setBackground(new java.awt.Color(255, 255, 255));
+        volverJB.setBackground(new java.awt.Color(153, 153, 255));
         volverJB.setFont(new java.awt.Font("Calibri", 0, 11)); // NOI18N
         volverJB.setText("VOLVER");
         volverJB.addActionListener(new java.awt.event.ActionListener() {
@@ -216,16 +217,18 @@ public class Ventana2 extends javax.swing.JFrame {
             }
         });
         jPanel1.add(volverJB);
-        volverJB.setBounds(160, 300, 110, 23);
+        volverJB.setBounds(150, 300, 110, 23);
 
-        btRecetas.setText("Recetar");
+        btRecetas.setBackground(new java.awt.Color(153, 153, 255));
+        btRecetas.setFont(new java.awt.Font("Calibri", 0, 11)); // NOI18N
+        btRecetas.setText("RECETAR");
         btRecetas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btRecetasActionPerformed(evt);
             }
         });
         jPanel1.add(btRecetas);
-        btRecetas.setBounds(300, 300, 110, 23);
+        btRecetas.setBounds(290, 300, 110, 23);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -270,10 +273,10 @@ public class Ventana2 extends javax.swing.JFrame {
 
     private void btRecetasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRecetasActionPerformed
         JDialog jdMedicamentos = new JDialog();
-        jdMedicamentos.setSize(400,500);
+        jdMedicamentos.setSize(400,400);
         jdMedicamentos.setVisible(true);
         jdMedicamentos.setLayout(null);
-        
+        jdMedicamentos.setLocationRelativeTo(null); 
         
         jdMedicamentos.add(jbMedicamento);
         jbMedicamento.setBounds(10, 40, 100, 50);

@@ -78,14 +78,15 @@ public class Ventana extends javax.swing.JFrame {
         jLabel4.setBounds(10, 10, 370, 50);
 
         salirJB.setBackground(new java.awt.Color(153, 153, 255));
-        salirJB.setText("Salir");
+        salirJB.setFont(new java.awt.Font("Calibri", 0, 11)); // NOI18N
+        salirJB.setText("SALIR");
         salirJB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 salirJBActionPerformed(evt);
             }
         });
         jPanel1.add(salirJB);
-        salirJB.setBounds(333, 0, 60, 23);
+        salirJB.setBounds(323, 0, 70, 23);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
