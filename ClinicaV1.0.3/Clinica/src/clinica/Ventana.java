@@ -68,7 +68,7 @@ public class Ventana extends javax.swing.JFrame {
         jPanel1.add(accederJB);
         accederJB.setBounds(140, 250, 120, 23);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/clinica/carpeta.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\scorpions\\Documents\\NetBeansProjects\\Clinica\\carpeta.png")); // NOI18N
         jPanel1.add(jLabel1);
         jLabel1.setBounds(10, 90, 360, 230);
 
