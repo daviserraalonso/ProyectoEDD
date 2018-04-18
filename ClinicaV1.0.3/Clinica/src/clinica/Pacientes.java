@@ -10,17 +10,16 @@ public class Pacientes {
     private String nombre;
     private String direccion;
     private String telefono;
-    private ArrayList<Medicamentos> medicamentos;
     public Medicamentos medicamento_m;
     
 
-    public Pacientes(String dni, String nombre, String direccion, String telefono){
+    public Pacientes(String dni, String nombre, String direccion, String telefono, ArrayList Medicamentos){
         
         this.dni=dni;
         this.nombre=nombre;
         this.direccion=direccion;
         this.telefono=telefono;
-        
+        this.medicamento_m=Medicamentos;
     
     }
     public String toString(){
