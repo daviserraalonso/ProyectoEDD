@@ -13,13 +13,13 @@ public class Pacientes {
     public Medicamentos medicamento_m;
     
 
-    public Pacientes(String dni, String nombre, String direccion, String telefono, ArrayList Medicamentos){
+    public Pacientes(String dni, String nombre, String direccion, String telefono, ArrayList <Medicamentos> medicamentos){
         
         this.dni=dni;
         this.nombre=nombre;
         this.direccion=direccion;
         this.telefono=telefono;
-        this.medicamento_m=Medicamentos;
+        this.medicamento_m = medicamentos;
     
     }
     public String toString(){
