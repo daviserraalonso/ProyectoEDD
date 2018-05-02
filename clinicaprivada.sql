@@ -1,6 +1,30 @@
-DROP DATABASE IF EXISTS clinicaprivada;
-CREATE DATABASE clinicaprivada;
-USE clinicaprivada;
+-- phpMyAdmin SQL Dump
+-- version 4.6.5.2
+-- https://www.phpmyadmin.net/
+--
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 02-05-2018 a las 23:53:06
+-- Versión del servidor: 10.1.21-MariaDB
+-- Versión de PHP: 5.6.30
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Base de datos: `clinicaprivada`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `consulta`
+--
 
 CREATE TABLE `consulta` (
   `numConsulta` int(10) NOT NULL
@@ -30,26 +54,23 @@ INSERT INTO `consulta` (`numConsulta`) VALUES
 --
 
 CREATE TABLE `medicamento` (
-  `idMe` int(11) NOT NULL,
-  `nombre` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `idMedicamento` int(11) NOT NULL,
+  `NombreMedicamento` varchar(20) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `medicamento`
 --
 
-INSERT INTO `medicamento` (`idMe`, `nombre`) VALUES
+INSERT INTO `medicamento` (`idMedicamento`, `NombreMedicamento`) VALUES
 (0, 'Paracetamol'),
-(214, 'Ecotiofato'),
-(2541, 'Butorfanol'),
-(3647, 'Dalsy'),
-(3652, 'Escitalopram'),
-(3698, 'Mucosan'),
-(5210, 'Ibuprofeno'),
-(5894, 'Amoxicilina'),
-(7895, 'Calcitonina'),
-(8541, 'Difilina'),
-(9412, 'Pectox');
+(2, 'Dalsy'),
+(14, 'Priamida'),
+(15, 'Bromcom'),
+(214, 'Gelocatil'),
+(3698, 'Foscom'),
+(5894, 'Dalsy'),
+(7895, 'Levetiracetam');
 
 -- --------------------------------------------------------
 
@@ -88,26 +109,26 @@ INSERT INTO `medico` (`idM`, `apellido`, `especialidad`, `NUS`, `numConsulta`) V
 
 CREATE TABLE `paciente` (
   `NUS` int(11) NOT NULL,
-  `nombre` varchar(20) DEFAULT NULL,
-  `primer_apellido` varchar(20) DEFAULT NULL,
-  `segundo_apellido` varchar(20) DEFAULT NULL,
+  `DNI` varchar(9) COLLATE utf8_unicode_ci NOT NULL,
+  `nombre` varchar(20) CHARACTER SET latin1 DEFAULT NULL,
+  `primer_apellido` varchar(20) CHARACTER SET latin1 DEFAULT NULL,
+  `segundo_apellido` varchar(20) CHARACTER SET latin1 DEFAULT NULL,
   `tlf` int(11) DEFAULT NULL,
   `fecha_nacimiento` date DEFAULT NULL,
-  `fecha_alta` date DEFAULT NULL,
-  `medicamentos` int(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `fecha_alta` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT;
 
 --
 -- Volcado de datos para la tabla `paciente`
 --
 
-INSERT INTO `paciente` (`NUS`, `nombre`, `primer_apellido`, `segundo_apellido`, `tlf`, `fecha_nacimiento`, `fecha_alta`, `medicamentos`) VALUES
-(12345678, 'Luisa', 'Garrido', 'Sanchez', 958412036, '1980-02-03', '2000-01-01', 2541),
-(23654178, 'Rocio', 'Fernandez', 'Lopez', 698523014, '1993-01-20', '2002-06-06', 214),
-(25418944, 'Jose', 'Cano', 'Pineda', 741025369, '1970-05-31', '1980-03-04', 0),
-(36201478, 'Alfonso', 'Delgado', 'Muñoz', 758142036, '1964-03-24', '1984-06-05', 9412),
-(52147896, 'Carlos', 'Diaz', 'Gutierrez', 654120369, '1999-03-01', '2000-03-01', 7895),
-(98520361, 'Antonia', 'Ruiz', 'Mesa', 958741203, '2000-01-01', '2018-04-12', 5210);
+INSERT INTO `paciente` (`NUS`, `DNI`, `nombre`, `primer_apellido`, `segundo_apellido`, `tlf`, `fecha_nacimiento`, `fecha_alta`) VALUES
+(12345678, '45921676z', 'Luisa', 'Garrido', 'Sanchez', 958412036, '1980-02-03', '2000-01-01'),
+(23654178, '12345678j', 'Rocio', 'Fernandez', 'Lopez', 698523014, '1993-01-20', '2002-06-06'),
+(25418944, '14785235h', 'Jose', 'Cano', 'Pineda', 741025369, '1970-05-31', '1980-03-04'),
+(36201478, '78945615f', 'Alfonso', 'Delgado', 'Muñoz', 758142036, '1964-03-24', '1984-06-05'),
+(52147896, '83469752b', 'Carlos', 'Diaz', 'Gutierrez', 654120369, '1999-03-01', '2000-03-01'),
+(98520361, '34741522e', 'Antonia', 'Ruiz', 'Mesa', 958741203, '2000-01-01', '2018-04-12');
 
 -- --------------------------------------------------------
 
@@ -120,7 +141,7 @@ CREATE TABLE `receta` (
   `idMedico` int(11) DEFAULT NULL,
   `Paciente` int(11) NOT NULL,
   `fecha_receta` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPACT;
 
 --
 -- Volcado de datos para la tabla `receta`
@@ -148,7 +169,7 @@ ALTER TABLE `consulta`
 -- Indices de la tabla `medicamento`
 --
 ALTER TABLE `medicamento`
-  ADD PRIMARY KEY (`idMe`);
+  ADD PRIMARY KEY (`idMedicamento`);
 
 --
 -- Indices de la tabla `medico`
@@ -161,8 +182,7 @@ ALTER TABLE `medico`
 -- Indices de la tabla `paciente`
 --
 ALTER TABLE `paciente`
-  ADD PRIMARY KEY (`NUS`),
-  ADD KEY `pacienteMedicamentos` (`medicamentos`);
+  ADD PRIMARY KEY (`NUS`);
 
 --
 -- Indices de la tabla `receta`
@@ -185,15 +205,13 @@ ALTER TABLE `medico`
   ADD CONSTRAINT `medicoConsulta` FOREIGN KEY (`numConsulta`) REFERENCES `consulta` (`numConsulta`) ON DELETE SET NULL ON UPDATE SET NULL;
 
 --
--- Filtros para la tabla `paciente`
---
-ALTER TABLE `paciente`
-  ADD CONSTRAINT `pacienteMedicamentos` FOREIGN KEY (`medicamentos`) REFERENCES `medicamento` (`idMe`) ON DELETE SET NULL ON UPDATE SET NULL;
-
---
 -- Filtros para la tabla `receta`
 --
 ALTER TABLE `receta`
-  ADD CONSTRAINT `recetaMedicamento` FOREIGN KEY (`idMedicamento`) REFERENCES `medicamento` (`idMe`) ON DELETE SET NULL ON UPDATE SET NULL,
+  ADD CONSTRAINT `recetaMedicamento` FOREIGN KEY (`idMedicamento`) REFERENCES `medicamento` (`idMedicamento`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `recetaMedico` FOREIGN KEY (`idMedico`) REFERENCES `medico` (`idM`) ON DELETE SET NULL ON UPDATE SET NULL,
   ADD CONSTRAINT `recetaPaciente` FOREIGN KEY (`Paciente`) REFERENCES `paciente` (`NUS`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
