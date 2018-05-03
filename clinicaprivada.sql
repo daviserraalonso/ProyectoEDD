@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-05-2018 a las 23:53:06
+-- Tiempo de generación: 04-05-2018 a las 00:01:02
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -114,21 +114,25 @@ CREATE TABLE `paciente` (
   `primer_apellido` varchar(20) CHARACTER SET latin1 DEFAULT NULL,
   `segundo_apellido` varchar(20) CHARACTER SET latin1 DEFAULT NULL,
   `tlf` int(11) DEFAULT NULL,
+  `Calle` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `Localidad` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `fecha_nacimiento` date DEFAULT NULL,
-  `fecha_alta` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT;
+  `fecha_alta` date DEFAULT NULL,
+  `Medico` int(11) NOT NULL,
+  `Historial` varchar(400) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `paciente`
 --
 
-INSERT INTO `paciente` (`NUS`, `DNI`, `nombre`, `primer_apellido`, `segundo_apellido`, `tlf`, `fecha_nacimiento`, `fecha_alta`) VALUES
-(12345678, '45921676z', 'Luisa', 'Garrido', 'Sanchez', 958412036, '1980-02-03', '2000-01-01'),
-(23654178, '12345678j', 'Rocio', 'Fernandez', 'Lopez', 698523014, '1993-01-20', '2002-06-06'),
-(25418944, '14785235h', 'Jose', 'Cano', 'Pineda', 741025369, '1970-05-31', '1980-03-04'),
-(36201478, '78945615f', 'Alfonso', 'Delgado', 'Muñoz', 758142036, '1964-03-24', '1984-06-05'),
-(52147896, '83469752b', 'Carlos', 'Diaz', 'Gutierrez', 654120369, '1999-03-01', '2000-03-01'),
-(98520361, '34741522e', 'Antonia', 'Ruiz', 'Mesa', 958741203, '2000-01-01', '2018-04-12');
+INSERT INTO `paciente` (`NUS`, `DNI`, `nombre`, `primer_apellido`, `segundo_apellido`, `tlf`, `Calle`, `Localidad`, `fecha_nacimiento`, `fecha_alta`, `Medico`, `Historial`) VALUES
+(12345678, '45921676z', 'Luisa', 'Garrido', 'Sanchez', 958412036, 'C\\ Aurora', 'Granada', '1980-02-03', '2000-01-01', 1122, 'Fiebre'),
+(23654178, '12345678j', 'Rocio', 'Fernandez', 'Lopez', 698523014, 'Avda. andalucia', 'Guadix', '1993-01-20', '2002-06-06', 2030, 'Catarro'),
+(25418944, '14785235h', 'Jose', 'Cano', 'Pineda', 741025369, 'C\\ El colmenar', 'El padul', '1970-05-31', '1980-03-04', 3040, 'Tumor'),
+(36201478, '78945615f', 'Alfonso', 'Delgado', 'Muñoz', 758142036, 'Barriada la cuna', 'Córdoba', '1964-03-24', '1984-06-05', 3322, 'Apendicitis'),
+(52147896, '83469752b', 'Carlos', 'Diaz', 'Gutierrez', 654120369, 'C\\ Buenos Aires', 'Purullena', '1999-03-01', '2000-03-01', 3322, 'Lumbalgia'),
+(98520361, '34741522e', 'Antonia', 'Ruiz', 'Mesa', 958741203, 'C\\ Las viñas', 'Benalúa', '2000-01-01', '2018-04-12', 4455, 'Gastroenteritis');
 
 -- --------------------------------------------------------
 
@@ -182,7 +186,8 @@ ALTER TABLE `medico`
 -- Indices de la tabla `paciente`
 --
 ALTER TABLE `paciente`
-  ADD PRIMARY KEY (`NUS`);
+  ADD PRIMARY KEY (`NUS`),
+  ADD KEY `fkPacienteMedico` (`Medico`);
 
 --
 -- Indices de la tabla `receta`
@@ -205,12 +210,18 @@ ALTER TABLE `medico`
   ADD CONSTRAINT `medicoConsulta` FOREIGN KEY (`numConsulta`) REFERENCES `consulta` (`numConsulta`) ON DELETE SET NULL ON UPDATE SET NULL;
 
 --
+-- Filtros para la tabla `paciente`
+--
+ALTER TABLE `paciente`
+  ADD CONSTRAINT `fkPacienteMedico` FOREIGN KEY (`Medico`) REFERENCES `medico` (`idM`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
 -- Filtros para la tabla `receta`
 --
 ALTER TABLE `receta`
   ADD CONSTRAINT `recetaMedicamento` FOREIGN KEY (`idMedicamento`) REFERENCES `medicamento` (`idMedicamento`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `recetaMedico` FOREIGN KEY (`idMedico`) REFERENCES `medico` (`idM`) ON DELETE SET NULL ON UPDATE SET NULL,
-  ADD CONSTRAINT `recetaPaciente` FOREIGN KEY (`Paciente`) REFERENCES `paciente` (`NUS`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `recetaPaciente` FOREIGN KEY (`Paciente`) REFERENCES `paciente` (`NUS`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
