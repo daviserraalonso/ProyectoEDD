@@ -32,7 +32,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 
-public class JDialogMedicamentos {
+public class JDialogMedicamentos implements ActionListener{
 
     private Connection conexion;
     private JDialog jdMedicamentos;
@@ -47,6 +47,7 @@ public class JDialogMedicamentos {
 
     private JButton btGuardar;
     private JButton btImprimir;
+    private String nus = "";
 
     private Image imagenLogo = new ImageIcon("src\\images\\logo.png").getImage();
     private Image imagenTijera = new ImageIcon("src\\images\\tijera.jpg").getImage();
@@ -77,6 +78,7 @@ public class JDialogMedicamentos {
         this.apellido1 = apellido1;
         this.apellido2 = apellido2;
         this.DNI = DNI;
+        this.nus = nus;
         
         jdMedicamentos = new JDialog();
         jdMedicamentos.setLayout(null);
@@ -99,17 +101,26 @@ public class JDialogMedicamentos {
         
         btGuardar = new JButton("Guardar");
         btImprimir = new JButton("Imprimir");
-        
-
+ 
         jdMedicamentos.add(btGuardar);
         btGuardar.setBounds(50, 230, 90, 30);
         
         jdMedicamentos.add(btImprimir);
         btImprimir.setBounds(170, 230, 90, 30); 
+
+                
+        btImprimir.addActionListener(this);
+        btGuardar.addActionListener(this);
+
+        jdMedicamentos.setSize(400, 500);
+        jdMedicamentos.setVisible(true);
         
-        btGuardar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+    }
+    
+    
+    public void actionPerformed(ActionEvent e){
+        if(e.getSource() == btGuardar){
+            //public void actionPerformed(ActionEvent e) {
                 PreparedStatement prepared;
                 ResultSet rs = mysql.ejecutaConsulta("SELECT * FROM medico");
 
@@ -153,39 +164,30 @@ public class JDialogMedicamentos {
                 } catch (SQLException ex) {
                     Logger.getLogger(JDialogMedicamentos.class.getName()).log(Level.SEVERE, null, ex);
                 }
+        }
+        if (e.getSource() == btImprimir) {
 
-                
-                btImprimir.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        
-                    /*
+            System.out.println("pepe");
+
+            /*
                     Tenemos que crear un job que es el que será enviado a la impresora seleccionada
                     Establecemos que sea imprimible y pasamos como parámetro nuestra clase interna
                     Seleccionamos el dialogo de impresion por último imprimimos */
-                        
-                        try {
-                            PrinterJob job = PrinterJob.getPrinterJob();
-                            PageFormat pf = job.defaultPage();
-                            Paper paper = new Paper();
+            try {
+                PrinterJob job = PrinterJob.getPrinterJob();
+                PageFormat pf = job.defaultPage();
+                Paper paper = new Paper();
 
-                            job.setPrintable(new miPrintable(), pf);
-                            job.printDialog();
-                            job.print();
-                        } catch (PrinterException ex) {
-                            Logger.getLogger(JDialogMedicamentos.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    }
-                }); 
-            jdMedicamentos.pack();
+                job.setPrintable(new miPrintable(), pf);
+                job.printDialog();
+                job.print();
+            } catch (PrinterException ex) {
+                Logger.getLogger(JDialogMedicamentos.class.getName()).log(Level.SEVERE, null, ex);
             }
-        });
-        
-        
-        jdMedicamentos.setSize(400, 500);
-        jdMedicamentos.setVisible(true);
-        
-    }
+        }
+ 
+        }
+
 
  
     public class miPrintable implements Printable {
