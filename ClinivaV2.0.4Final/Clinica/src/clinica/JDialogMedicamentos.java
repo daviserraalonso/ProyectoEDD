@@ -45,8 +45,8 @@ public class JDialogMedicamentos {
     private JTextField tfPeriodicidad = new JTextField();
     private JTextField tfTomas = new JTextField();
 
-    private JButton btGuardar = new JButton("Guardar");
-    private JButton btImprimir = new JButton("Imprimir");
+    private JButton btGuardar;
+    private JButton btImprimir;
 
     private Image imagenLogo = new ImageIcon("src\\images\\logo.png").getImage();
     private Image imagenTijera = new ImageIcon("src\\images\\tijera.jpg").getImage();
@@ -67,6 +67,8 @@ public class JDialogMedicamentos {
     String DNI;
 
     public JDialogMedicamentos(String ApeDoc, String DocEspecialidad, String nombre, String apellido1, String apellido2, String nus, Connection conexion, MySQL mysql) {
+        
+        
         this.mysql = mysql;
         this.conexion = conexion;
         this.ApeDoc = ApeDoc;
@@ -75,11 +77,10 @@ public class JDialogMedicamentos {
         this.apellido1 = apellido1;
         this.apellido2 = apellido2;
         this.DNI = DNI;
+        
         jdMedicamentos = new JDialog();
-        jdMedicamentos.setSize(400, 500);
-        jdMedicamentos.setVisible(true);
         jdMedicamentos.setLayout(null);
-
+        
         jdMedicamentos.add(jbMedicamento);
         jbMedicamento.setBounds(10, 40, 100, 50);
         jdMedicamentos.add(jbPeriodicidad);
@@ -93,9 +94,19 @@ public class JDialogMedicamentos {
         tfPeriodicidad.setBounds(110, 95, 150, 20);
         jdMedicamentos.add(tfTomas);
         tfTomas.setBounds(100, 135, 150, 20);
+        
+        jdMedicamentos.setLocationRelativeTo(null);
+        
+        btGuardar = new JButton("Guardar");
+        btImprimir = new JButton("Imprimir");
+        
 
         jdMedicamentos.add(btGuardar);
         btGuardar.setBounds(50, 230, 90, 30);
+        
+        jdMedicamentos.add(btImprimir);
+        btImprimir.setBounds(170, 230, 90, 30); 
+        
         btGuardar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -143,12 +154,12 @@ public class JDialogMedicamentos {
                     Logger.getLogger(JDialogMedicamentos.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
-                jdMedicamentos.add(btImprimir);
+                
                 btImprimir.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         
-                        /*
+                    /*
                     Tenemos que crear un job que es el que será enviado a la impresora seleccionada
                     Establecemos que sea imprimible y pasamos como parámetro nuestra clase interna
                     Seleccionamos el dialogo de impresion por último imprimimos */
@@ -165,10 +176,15 @@ public class JDialogMedicamentos {
                             Logger.getLogger(JDialogMedicamentos.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
-                });
-                btImprimir.setBounds(150, 230, 90, 30);
+                }); 
+            jdMedicamentos.pack();
             }
         });
+        
+        
+        jdMedicamentos.setSize(400, 500);
+        jdMedicamentos.setVisible(true);
+        
     }
 
  
