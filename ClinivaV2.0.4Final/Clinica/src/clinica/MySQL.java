@@ -21,10 +21,12 @@ public class MySQL {
 
     static final String DDBC_DRIVER = "com.mysql.jdbc.Driver";
     static String DB_URL = "jdbc:mysql://localhost:3306/";
+    
+   // static String DB_URL = "jdbc:mysql://mysql514int.srv-hostalia.com:3306/";
 
 // Credenciales de usuario
-    static String USER = "root";
-    static String PASS = "1234";
+//    static String USER = "root";
+//    static String PASS = "1234";
     static Statement stmt;
     static private ResultSet rs;
     static private ResultSetMetaData meta;
@@ -41,12 +43,15 @@ public class MySQL {
             Class.forName("com.mysql.jdbc.Driver");
             Class.forName(DDBC_DRIVER);
             conex = DriverManager.getConnection(DB_URL + db, user, pass);
+            
             stmt = conex.createStatement(
                     ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             System.out.println("conectado");
+            
 
         } catch (Exception e) {
             e.printStackTrace();
+            //System.out.println("conexion" + DB_URL + "" + " " + user + " " + pass + " " );
             JOptionPane.showMessageDialog(null, "Error al conectar con la base de datos");
         }
     return conex;

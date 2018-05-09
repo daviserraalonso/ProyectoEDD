@@ -1,3 +1,3 @@
-2
-aaaa
-aaaaa
+0
+1 seaman
+1 cada 8 horas

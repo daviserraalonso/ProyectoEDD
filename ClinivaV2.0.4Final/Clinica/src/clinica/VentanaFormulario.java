@@ -461,7 +461,7 @@ public class VentanaFormulario extends javax.swing.JFrame{
 
     private void btRecetasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRecetasActionPerformed
 
-        new JDialogMedicamentos(apeMTF.getText(), tfEspecialidad.getText(), nombreTF.getText(), apeTF.getText(), ape2TF.getText(), nus, mysql.getConexion(), mysql);
+        new JDialogMedicamentos(apeMTF.getText(), tfEspecialidad.getText(), nombreTF.getText(), apeTF.getText(), ape2TF.getText(), nus, tfDni.getText(), mysql.getConexion(), mysql);
         
     }//GEN-LAST:event_btRecetasActionPerformed
 

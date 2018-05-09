@@ -67,7 +67,7 @@ public class JDialogMedicamentos implements ActionListener{
     String apellido2;
     String DNI;
 
-    public JDialogMedicamentos(String ApeDoc, String DocEspecialidad, String nombre, String apellido1, String apellido2, String nus, Connection conexion, MySQL mysql) {
+    public JDialogMedicamentos(String ApeDoc, String DocEspecialidad, String nombre, String apellido1, String apellido2, String nus, String dni, Connection conexion, MySQL mysql) {
         
         
         this.mysql = mysql;
@@ -77,7 +77,7 @@ public class JDialogMedicamentos implements ActionListener{
         this.nombre = nombre;
         this.apellido1 = apellido1;
         this.apellido2 = apellido2;
-        this.DNI = DNI;
+        this.DNI = dni;
         this.nus = nus;
         
         jdMedicamentos = new JDialog();
