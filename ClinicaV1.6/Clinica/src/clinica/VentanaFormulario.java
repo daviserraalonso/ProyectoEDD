@@ -483,10 +483,7 @@ public class VentanaFormulario extends javax.swing.JFrame{
                 localidadTF.setText(pacientes.get(i).getLocalidad());
                 idMedicoTF.setText(String.valueOf(pacientes.get(i).getMedico()));
                 medicamentosTA.setText(pacientes.get(i).getHistorial());         
-            }
-                for(Pacientes p : pacientes){
-                    System.out.println("prueba: "+ p.toString());
-                }
+            } 
         }
         ResultSet rsMedico = mysql.ejecutaConsulta("SELECT apellido FROM medico WHERE idM =" +
                                                             "(SELECT Medico FROM paciente where NUS =" + nuss +")");

@@ -26,7 +26,7 @@ public class VentanaEntrada extends javax.swing.JFrame {
 
     public VentanaEntrada() {
         mysql = new MySQL();
-        conexion = mysql.conecta("pepe", "pepa", "clinicaprivada");
+        conexion = mysql.conecta("root", "1234", "clinicaprivada");
         pacientes = new ArrayList<>();
         initComponents();
         setVisible(true);

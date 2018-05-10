@@ -40,11 +40,12 @@ public class MySQL {
 
             Class.forName("com.mysql.jdbc.Driver");
             Class.forName(DDBC_DRIVER);
+            
             conex = DriverManager.getConnection(DB_URL + db, user, pass);
+            
             stmt = conex.createStatement(
                     ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            System.out.println("conectado");
-
+            
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error al conectar con la base de datos");
