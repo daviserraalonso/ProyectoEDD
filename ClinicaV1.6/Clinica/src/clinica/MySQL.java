@@ -23,8 +23,8 @@ public class MySQL {
     static String DB_URL = "jdbc:mysql://localhost:3306/";
 
 // Credenciales de usuario
-    static String USER = "root";
-    static String PASS = "1234";
+//    static String USER = "pepe";
+//    static String PASS = "pepa";
     static Statement stmt;
     static private ResultSet rs;
     static private ResultSetMetaData meta;
