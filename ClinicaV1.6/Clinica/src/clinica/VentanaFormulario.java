@@ -14,6 +14,7 @@ import java.awt.print.Pageable;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
+import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -31,12 +32,15 @@ public class VentanaFormulario extends javax.swing.JFrame{
 
     
     private static ArrayList<Pacientes> pacientes;
-    static String nus = "";
-    String nusa = "";
+    static int nus = 0;
+    int nusa = 0;
     private MySQL mysql;
     private JButton btInsertar;
+    static Connection conexion;
     
-    public VentanaFormulario(ArrayList<Pacientes> pacientes, String nuss) {
+    public VentanaFormulario(ArrayList<Pacientes> pacientes, int nuss, Connection conexion) {
+        
+        this.conexion = conexion;
         mysql = new MySQL();
         initComponents();
         btInsertar = new JButton("Insertar");
@@ -47,20 +51,18 @@ public class VentanaFormulario extends javax.swing.JFrame{
         
         btInsertar.setVisible(false);
         
-        nusa = nus;
-        
-        System.out.println("nusss: " + nusa);
+        nusa = nuss;
         
         jpMedico.setBorder(javax.swing.BorderFactory.createTitledBorder("Médico Asociado"));
         jpMedicamentosHistorial.setBorder(javax.swing.BorderFactory.createTitledBorder("Medicamentos e Historial"));
         jpDatosPaciente.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos del Paciente"));
         
         
-        llenarFormulario(Integer.parseInt(nus));
+        llenarFormulario(nus);
         
-        idMedicoTF.setEnabled(false);
-        apeMTF.setEnabled(false);
-        tfEspecialidad.setEnabled(false);
+        idMedicoTF.setEditable(false);
+        apeMTF.setEditable(false);
+        tfEspecialidad.setEditable(false);
         
     }
     
@@ -156,6 +158,7 @@ public class VentanaFormulario extends javax.swing.JFrame{
         jPanel1.add(volverJB);
         volverJB.setBounds(250, 470, 110, 23);
 
+        btRecetas.setBackground(new java.awt.Color(255, 255, 255));
         btRecetas.setFont(new java.awt.Font("Calibri", 0, 11)); // NOI18N
         btRecetas.setText("RECETAR");
         btRecetas.addActionListener(new java.awt.event.ActionListener() {
@@ -386,7 +389,7 @@ public class VentanaFormulario extends javax.swing.JFrame{
                 .addGroup(jpDatosPacienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(calleJL1)
                     .addComponent(localidadTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel1.add(jpDatosPaciente);
@@ -456,7 +459,7 @@ public class VentanaFormulario extends javax.swing.JFrame{
 
     private void btRecetasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRecetasActionPerformed
 
-        new JDialogMedicamentos();
+        new JDialogMedicamentos(apeMTF.getText(), tfEspecialidad.getText(), nombreTF.getText(), apeTF.getText(), ape2TF.getText(), tfDni.getText(), nus, mysql.getConexion(), mysql);
         
     }//GEN-LAST:event_btRecetasActionPerformed
 
@@ -467,7 +470,7 @@ public class VentanaFormulario extends javax.swing.JFrame{
     
      public void llenarFormulario(int nuss){
         for(int i=0; i<pacientes.size();i++){
-            if(pacientes.get(i).getNus() == nuss){
+            if(nusa == pacientes.get(i).getNus()){
                 tfNus.setText(String.valueOf(pacientes.get(i).getNus()));
                 tfDni.setText(pacientes.get(i).getDni());
                 nombreTF.setText(pacientes.get(i).getNombre());
@@ -481,9 +484,12 @@ public class VentanaFormulario extends javax.swing.JFrame{
                 idMedicoTF.setText(String.valueOf(pacientes.get(i).getMedico()));
                 medicamentosTA.setText(pacientes.get(i).getHistorial());         
             }
+                for(Pacientes p : pacientes){
+                    System.out.println("prueba: "+ p.toString());
+                }
         }
         ResultSet rsMedico = mysql.ejecutaConsulta("SELECT apellido FROM medico WHERE idM =" +
-                                                            "(SELECT Medico FROM paciente where NUS =" + nus +")");
+                                                            "(SELECT Medico FROM paciente where NUS =" + nuss +")");
         String medico = "";
         try {
             while(rsMedico.next()){
@@ -504,7 +510,7 @@ public class VentanaFormulario extends javax.swing.JFrame{
         } catch (SQLException ex) {
             Logger.getLogger(VentanaFormulario.class.getName()).log(Level.SEVERE, null, ex);
         }
-            tfEspecialidad.setText(especialidad); 
+            tfEspecialidad.setText(especialidad);    
      }
      
      
@@ -608,7 +614,7 @@ public class VentanaFormulario extends javax.swing.JFrame{
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VentanaFormulario(pacientes, nus).setVisible(true); 
+                new VentanaFormulario(pacientes, nus, conexion).setVisible(true); 
             }
         });
     }

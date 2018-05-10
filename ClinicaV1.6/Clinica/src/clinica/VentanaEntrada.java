@@ -2,6 +2,7 @@
 package clinica;
 
 
+import java.awt.Color;
 import java.io.UnsupportedEncodingException;
 import java.sql.Connection;
 import java.sql.Date;
@@ -21,23 +22,24 @@ public class VentanaEntrada extends javax.swing.JFrame {
     private ResultSet resultSetPacientes;
     private ArrayList<Pacientes> pacientes;
     private Connection conexion;
+    private int nuss;
 
     public VentanaEntrada() {
         mysql = new MySQL();
-        conexion = mysql.conecta("root", "1234", "clinicaprivada");
+        conexion = mysql.conecta("pepe", "pepa", "clinicaprivada");
         pacientes = new ArrayList<>();
         initComponents();
         setVisible(true);
-        //setSize(500,600);
+
         setLocationRelativeTo(null);
         
-        llenarCombo();
-        
+ 
         try {
             llenarArrayList();
         } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(VentanaEntrada.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Problema al llenar el ArrayList");
         }
+
     }
 
 
@@ -50,8 +52,8 @@ public class VentanaEntrada extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         accederJB = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        jcNuss = new javax.swing.JComboBox<>();
         btNuevo = new javax.swing.JButton();
+        tfNuss = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         salirJB = new javax.swing.JButton();
 
@@ -84,14 +86,6 @@ public class VentanaEntrada extends javax.swing.JFrame {
         jPanel1.add(jLabel4);
         jLabel4.setBounds(180, 60, 370, 50);
 
-        jcNuss.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcNussActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jcNuss);
-        jcNuss.setBounds(340, 240, 110, 20);
-
         btNuevo.setBackground(new java.awt.Color(255, 255, 255));
         btNuevo.setFont(new java.awt.Font("Calibri", 0, 11)); // NOI18N
         btNuevo.setText("Nuevo Paciente");
@@ -102,6 +96,14 @@ public class VentanaEntrada extends javax.swing.JFrame {
         });
         jPanel1.add(btNuevo);
         btNuevo.setBounds(220, 310, 120, 23);
+
+        tfNuss.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfNussActionPerformed(evt);
+            }
+        });
+        jPanel1.add(tfNuss);
+        tfNuss.setBounds(340, 240, 130, 20);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/carpeta.png"))); // NOI18N
         jPanel1.add(jLabel1);
@@ -133,27 +135,44 @@ public class VentanaEntrada extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void accederJBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accederJBActionPerformed
-
-        VentanaFormulario ven = new VentanaFormulario(pacientes, String.valueOf(jcNuss.getSelectedItem()));
-
-        this.setEnabled(false);
-        this.setVisible(false);
-
-
+        try {
+            if(comprobarNuss() == true){
+                VentanaFormulario ven = new VentanaFormulario(pacientes, nuss, conexion);                
+                this.setEnabled(false);
+                this.setVisible(false);
+            }
+            
+        }catch(SQLException ex){
+            JOptionPane.showMessageDialog(null, "MAL en ventanaEntrada");
+        }catch(NumberFormatException e){
+            tfNuss.setBackground(Color.red);
+            JOptionPane.showMessageDialog(null, "Solo números por favor");
+        }
     }//GEN-LAST:event_accederJBActionPerformed
 
     private void salirJBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirJBActionPerformed
         System.exit(0);
     }//GEN-LAST:event_salirJBActionPerformed
 
-    private void jcNussActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcNussActionPerformed
-
-    }//GEN-LAST:event_jcNussActionPerformed
-
     private void btNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNuevoActionPerformed
         new VentanaFormulario();
     }//GEN-LAST:event_btNuevoActionPerformed
 
+    private void tfNussActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfNussActionPerformed
+        
+    }//GEN-LAST:event_tfNussActionPerformed
+
+    public boolean comprobarNuss() throws SQLException{
+       boolean correcto = false;
+        for(Pacientes p : pacientes){
+            if(Integer.parseInt(tfNuss.getText()) == p.getNus()){
+                correcto = true;
+                nuss = p.getNus();
+            }
+        }        
+    return correcto;
+    }
+    
     public static void main(String args[]) {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -162,29 +181,7 @@ public class VentanaEntrada extends javax.swing.JFrame {
             }
         });
     }
-    
-    public boolean comprobarNuss(String nuss){
-        try{
-            Integer.parseInt(nuss);
-            return true;
-        }catch(NumberFormatException e){
-            return false;
-        }
-    }
-    
-    public void llenarCombo(){
-        rs = mysql.ejecutaConsulta("SELECT NUS FROM paciente");
-        int nuss = 0;
-        
-        try {
-            while(rs.next()){
-                nuss = rs.getInt(1);  
-                jcNuss.addItem(String.valueOf(nuss));
-            }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al llenar el combo");
-        }
-    }
+
     
     public void llenarArrayList() throws UnsupportedEncodingException{
         resultSet = mysql.ejecutaConsulta("SELECT * FROM paciente");
@@ -218,7 +215,7 @@ public class VentanaEntrada extends javax.swing.JFrame {
                 historial = resultSet.getString(12);
                                 
                 Pacientes paciente = new Pacientes(nuss, dni, nombre, primerApellido, segundoApellido, telf, calle, localidad, fechaNacimiento, fechaAlta, medico, historial);
-                
+                this.nuss = nuss;
                 pacientes.add(paciente);
             }
         } catch (SQLException ex) {
@@ -234,7 +231,7 @@ public class VentanaEntrada extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JComboBox<String> jcNuss;
     private javax.swing.JButton salirJB;
+    private javax.swing.JTextField tfNuss;
     // End of variables declaration//GEN-END:variables
 }
